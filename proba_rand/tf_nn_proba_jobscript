@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#SBATCH --job-name=rtouch_dnn
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=8gb
+#SBATCH --time=2:00:00
+#SBATCH --gres=gpu:1
+
+##SBATCH -o output.out
+##SBATCH -e output.err
+##SBATCH --mem=129151
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ben.zhao@data61.csiro.au
+
+module load python/3.6.1
+module load tensorflow/1.8.0-py36-gpu
+module load cuda/9.0.176
+module load cudnn/v7.1.4-cuda90
+
+python ./tf_touch_proba_full_repeat.py 4
+
+## for X in $(seq 0 10); do sbatch tf_nn_proba_jobscript; done;

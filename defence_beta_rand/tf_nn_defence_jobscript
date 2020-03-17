@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#SBATCH --job-name=dnn_deftouch
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=8gb
+#SBATCH --time=2:00:00
+#SBATCH --gres=gpu:1
+
+##SBATCH -o output.out
+##SBATCH -e output.err
+##SBATCH --mem=129151
+#SBATCH --mail-type=FAIL,END
+#SBATCH --mail-user=ben.zhao@data61.csiro.au
+
+module load python/3.6.1
+module load tensorflow/1.8.0-py36-gpu
+module load cuda/9.0.176
+module load cudnn/v7.1.4-cuda90
+
+python ./tf_touch_defence_full_repeat.py 4 0.3
+
+## for X in $(seq 0 49); do sbatch tf_nn_defence_jobscript; done;
